@@ -42,7 +42,9 @@ if (typeof contracts === 'undefined' || contracts.length === 0) {
 
 const nodeToConnect = process.env.CURRENT_NODE ? process.env.CURRENT_NODE : 'development';
 const nodeUrl = quorumConfig.quorum.network[nodeToConnect].httpProvider.url;
-const web3 = new Web3(new Web3.providers.HttpProvider(nodeUrl));
+const user = quorumConfig.quorum.network[nodeToConnect].httpProvider.user;
+const password = quorumConfig.quorum.network[nodeToConnect].httpProvider.password;
+const web3 = new Web3(new Web3.providers.HttpProvider(nodeUrl, 0, user, password ));
 
 // Deploy each contract and update quorum.json config file with new contract addresses.
 contracts.map((contract, index) => {

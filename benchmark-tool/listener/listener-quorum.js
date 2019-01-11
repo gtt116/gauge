@@ -51,7 +51,9 @@ class QuorumListener {
         // Determine listner node
         const nodeToConnect = process.env.CURRENT_NODE ? process.env.CURRENT_NODE : 'development';
         const nodeUrl = quorumConfig.quorum.network[nodeToConnect].httpProvider.url;
-        this.web3 = new Web3(new Web3.providers.HttpProvider(nodeUrl));
+        const user = quorumConfig.quorum.network[nodeToConnect].httpProvider.user;
+        const password = quorumConfig.quorum.network[nodeToConnect].httpProvider.password;
+        this.web3 = new Web3(new Web3.providers.HttpProvider(nodeUrl, 0, user, password));
 
         // Select event type
         if (!this.isEventListener) {

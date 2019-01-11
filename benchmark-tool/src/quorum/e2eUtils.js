@@ -34,7 +34,9 @@ let deployContract = (contract, index, configPath) => {
 		let quorumConfig = require(configPath);
 		const nodeToConnect = process.env.CURRENT_NODE ? process.env.CURRENT_NODE : 'development';
 		const nodeUrl = quorumConfig.quorum.network[nodeToConnect].httpProvider.url;
-		const web3 = new Web3(new Web3.providers.HttpProvider(nodeUrl));
+    const user = quorumConfig.quorum.network[nodeToConnect].httpProvider.user;
+    const password = quorumConfig.quorum.network[nodeToConnect].httpProvider.password;
+    const web3 = new Web3(new Web3.providers.HttpProvider(nodeUrl, 0, user, password));
 		// compute the abi, bytecode using solc.
 		const input = fs.readFileSync(path.join(path.dirname(__dirname), contract.path)); // Read contract source code.
 		const output = solc.compile(input.toString(), 1); // convert buffer to string and compile
@@ -76,7 +78,9 @@ let getcontext = (name, configPath) => {
 		const nodeUrl = quorumConfig.quorum.network[nodeToConnect].httpProvider.url;
 		logger.info( 'Selected Node: ' + nodeUrl);
 		let contract;
-		const web3 = new Web3(new Web3.providers.HttpProvider(nodeUrl));
+    const user = quorumConfig.quorum.network[nodeToConnect].httpProvider.user;
+    const password = quorumConfig.quorum.network[nodeToConnect].httpProvider.password;
+    const web3 = new Web3(new Web3.providers.HttpProvider(nodeUrl, 0, user, password));
 		switch (name) {
 			case 'ioheavy':
 				contract = getContract('ioheavy', quorumConfig);
